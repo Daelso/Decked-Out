@@ -1,8 +1,9 @@
 const sequelize = require('../config/connection');
 const { Deck, User, Card } = require('../models'); //tbd when we get models set up
+const withAuth = require('../utils/auth');
 const router = require('express').Router();
 //the get request for the main page
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
 	try {
 		const deckQuery = await Deck.findAll({
 			// where:{
@@ -136,7 +137,7 @@ router.get('/deck/:deck_id/card/:card_id', async (req, res) => { //Shows the ans
 });
 
 
-router.get('/my-decks', async (req, res) => {
+router.get('/my-decks', withAuth, async (req, res) => {
 	try {
 		const deckQuery = await Deck.findAll({
 			where:{
